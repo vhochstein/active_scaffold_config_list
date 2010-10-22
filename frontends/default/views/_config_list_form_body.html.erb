@@ -1,0 +1,14 @@
+<% @available_columns.each do |c| %>
+  <ol class="form">
+    <li class="form-element">
+        <dl>
+            <dt>
+               <label for="update_table_from"><%= c[ :label  ]%></label>
+            </dt>
+            <dd>
+               <%= check_box_tag c[ :param_name ], 1, @columns.include?( c[ :name ] )%>
+            </dd>
+        </dl>
+    </li>
+</ol>
+<% end %>

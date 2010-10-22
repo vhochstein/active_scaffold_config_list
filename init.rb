@@ -2,7 +2,7 @@
 ActiveScaffold rescue throw "should have included ActiveScaffold plug in first.  Please make sure that this overwrite plugging comes alphabetically after the ActiveScaffold plug in"
 
 # Load our overrides
-require "#{File.dirname(__FILE__)}/lib/active_scaffold/config/core.rb"
+require "#{File.dirname(__FILE__)}/lib/active_scaffold_config_list/config/core.rb"
 require "#{File.dirname(__FILE__)}/lib/active_scaffold/config/config_list.rb"
 require "#{File.dirname(__FILE__)}/lib/active_scaffold/actions/config_list.rb"
 require "#{File.dirname(__FILE__)}/lib/active_scaffold/helpers/view_helpers_override.rb"
@@ -14,7 +14,7 @@ require "#{File.dirname(__FILE__)}/lib/active_scaffold/helpers/view_helpers_over
 begin
   require File.dirname(__FILE__) + '/install'
 rescue
-  raise $! unless RAILS_ENV == 'production'
+  raise $! unless Rails.env == 'production'
 end
 
 # Add the actions as default actions.

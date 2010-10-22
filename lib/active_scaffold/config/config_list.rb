@@ -3,7 +3,6 @@ module ActiveScaffold::Config
     self.crud_type = :create
     def initialize(*args)
       super
-      @available_columns = Array.new
       @default_columns = Array.new
       @enabled = true
     end
@@ -17,7 +16,7 @@ module ActiveScaffold::Config
     def self.link=(val)
       @@link = val
     end
-    @@link = ActiveScaffold::DataStructures::ActionLink.new('prepare_config_list', :label => 'List columns..', :type => :table, :security_method => :create_authorized?)
+    @@link = ActiveScaffold::DataStructures::ActionLink.new('config_list', :label => 'List columns..', :type => :collection, :security_method => :create_authorized?)
 
     # configures where the plugin itself is located. there is no instance version of this.
     cattr_accessor :plugin_directory
@@ -27,11 +26,8 @@ module ActiveScaffold::Config
     # ----------------------------
     # the label= method already exists in the Form base class
     def label
-      @label ? as_(@label) : as_('Config list %s columns', @core.label.singularize)
+      'test' #@label ? as_(@label) : as_('Config list %s columns', @core.label.singularize)
     end
-
-    @available_columns = Array.new
-    attr_accessor :available_columns
     
     @default_columns = Array.new
     attr_accessor :default_columns
