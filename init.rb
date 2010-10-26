@@ -16,13 +16,3 @@ begin
 rescue
   raise $! unless Rails.env == 'production'
 end
-
-# Add the actions as default actions.
-ActiveScaffold.set_defaults do |config|
-  [ :config_list
-    #add here registration for actions
-    
-    ].each do |action|
-    config.actions.add action
-  end
-end

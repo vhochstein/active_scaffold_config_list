@@ -2,8 +2,8 @@ module ActiveScaffold::Actions
   module ConfigList
     
     def self.included(base)
-      base.before_filter :exclude_columns
-      base.before_filter :exclude_config_list, :only => [:index]
+      base.before_filter :store_config_list_params_into_session, :only => [:index]
+      base.helper_method :config_list_params
 
       as_config_list_plugin_path = File.join(Rails.root, 'vendor', 'plugins', ActiveScaffold::Config::ConfigList.plugin_directory, 'frontends', 'default' , 'views')
       
@@ -11,12 +11,6 @@ module ActiveScaffold::Actions
     end
 
     def config_list
-      @available_columns = active_scaffold_config.config_list.columns.map do |c| 
-        { :param_name => 'col_' + c.name.to_s, :name => c.name.to_s, :label => c.label }
-      end
-      
-      @columns = session_columns
-      
       respond_to do |type|
         type.html do
           render(:action => 'config_list_form', :layout => true)
@@ -27,95 +21,39 @@ module ActiveScaffold::Actions
       end
     end
     
-    def show_all_columns
-      show = active_scaffold_config.config_list.available_columns.map{|c| c.to_s }
-      session[self.class.to_s + '_col'] = show
-      show
-    end
-    
-    def reset_session_columns
-      session[self.class.to_s + '_col'] = nil
-    end
-
     protected
 
-    def session_columns
-      show = session[ self.class.to_s + '_col']
-
-      if show.nil? || show.size == 0
-        show = active_scaffold_config.config_list.default_columns.map{|c| c.to_s }
-        session[self.class.to_s + '_col'] = show
-      end
-
-      show
-    end
-
-    def exclude_columns
-      return if !config_list_enabled?
-
-      if active_scaffold_config.config_list.columns.length == 0
-        active_scaffold_config.list.columns.each do |c|
-          active_scaffold_config.config_list.columns << c
+    def store_config_list_params_into_session
+      if params[:config_list]
+        active_scaffold_session_storage[:config_list] = params.delete :config_list
+        case active_scaffold_session_storage[:config_list]
+        when String
+          active_scaffold_session_storage[:config_list] = nil
+        when Array
+          active_scaffold_session_storage[:config_list].collect!{|col_name| col_name.to_sym}
         end
       end
-
-      if active_scaffold_config.config_list.default_columns.size == 0
-        active_scaffold_config.list.columns.each do |c|
-          active_scaffold_config.config_list.default_columns << c.name.to_s
-        end
-      end
-
-      do_config_list
-
-      reset_session_columns if params[:commit] == "reset_to_default"
-      if params[:commit] == "show_all_columns"
-        show = show_all_columns
-      else
-        show = session_columns
-      end
-
-      active_scaffold_config.config_list.columns.each do |c|
-         if !show.include?( c.to_s )
-            if !active_scaffold_config.list.columns.find_by_name( c.name.to_sym ).nil?
-             active_scaffold_config.list.columns.exclude c.name.to_sym
-            end
-         else
-           if active_scaffold_config.list.columns.find_by_name( c.name.to_sym ).nil?
-             active_scaffold_config.list.columns << c.name.to_sym
-            end
-         end
-      end
     end
 
-    def exclude_config_list
-      if !config_list_enabled?
-        active_scaffold_config.action_links.delete("prepare_config_list")
-        active_scaffold_config.actions.exclude(:config_list)
-      end
-    end
-
-    def config_list_enabled?
-      active_scaffold_config.config_list.enabled
+    def config_list_params
+      active_scaffold_session_storage[:config_list]
     end
 
     def do_config_list
-      
-      columns = active_scaffold_config.config_list.columns.map{|c|c}
-      c = Array.new 
-    
-      params.each do |name,value|
-         n = name[4..name.length]
-         if name[0..3] == 'col_' && ( columns.include? n )
-             c << n
-         end
+      active_scaffold_config.list.columns.column_order.clear
+      if !config_list_params.nil? && config_list_params.is_a?(Array)
+         active_scaffold_config.list.columns.column_order.concat(config_list_params)
       end
-      
-      if c.size > 0
-        session[self.class.to_s + '_col'] = c       
-      end
-     
     end
-   
 
+    def list_columns
+      columns = super
+      if !config_list_params.nil? && config_list_params.is_a?(Array)
+        config_list = config_list_params
+        columns.select{|column| config_list.include? column.name}.sort{|x,y| config_list.index(x.name) <=> config_list.index(y.name)}
+      else
+        columns
+      end
+    end
   end
 end

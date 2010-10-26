@@ -3,8 +3,6 @@ module ActiveScaffold::Config
     self.crud_type = :create
     def initialize(*args)
       super
-      @default_columns = Array.new
-      @enabled = true
     end
 
     # global level configuration
@@ -28,11 +26,5 @@ module ActiveScaffold::Config
     def label
       'test' #@label ? as_(@label) : as_('Config list %s columns', @core.label.singularize)
     end
-    
-    @default_columns = Array.new
-    attr_accessor :default_columns
-    
-    @enabled = true
-    attr_accessor :enabled
   end
 end
