@@ -24,7 +24,7 @@ module ActiveScaffold::Config
     # ----------------------------
     # the label= method already exists in the Form base class
     def label
-      'test' #@label ? as_(@label) : as_('Config list %s columns', @core.label.singularize)
+      @label ? as_(@label) : as_('Config list %{model} columns', :model => @core.label.singularize)
     end
   end
 end
