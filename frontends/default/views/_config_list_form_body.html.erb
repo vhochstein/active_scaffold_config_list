@@ -1,14 +1,14 @@
+<ol class="form">
 <% active_scaffold_config.list.columns.collect_visible.each do |c| %>
-  <ol class="form">
     <li class="form-element">
         <dl>
             <dt>
                <label for="update_table_from"><%= c.label%></label>
             </dt>
             <dd>
-               <%= check_box_tag 'config_list[]', c.name.to_s, (config_list_params.nil? ? true : config_list_params.include?(c.name))%>
+               <%= check_box_tag 'config_list[]', c.name.to_s, (config_list_params.nil? ? true : config_list_params.include?(c.name)), {:id => nil}%>
             </dd>
         </dl>
     </li>
-</ol>
 <% end %>
+</ol>
