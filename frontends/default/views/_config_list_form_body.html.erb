@@ -7,9 +7,9 @@
 <% end %>
 </ol>
 <% if ActiveScaffold.js_framework == :prototype %>
-<%= sortable_element *config_list_sort_params %>
+<%= sortable_element [config_list_ol_id, {:tag => 'li', :url => nil}] %>
 <% elsif ActiveScaffold.js_framework == :jquery %>
   <% reorder_params = {}
      options = {:update => false} %>
-       <%= javascript_tag "ActiveScaffold.sortable('#{config_list_sort_params[0]}', #{controller_name.to_json}, #{options.to_json}, #{reorder_params.to_json});" %>
+       <%= javascript_tag "ActiveScaffold.sortable('#{config_list_ol_id}', #{controller_name.to_json}, #{options.to_json}, #{reorder_params.to_json});" %>
 <% end %>

@@ -11,12 +11,4 @@ ActiveScaffold::Helpers::ViewHelpers.module_eval do
       def config_list_ol_id
         "ol_#{element_form_id(:action => :config_list)}"
       end
-
-      def config_list_sort_params
-        options = {
-          :tag => 'li',
-          :url => nil
-        }
-        [config_list_ol_id, options]
-      end
 end
