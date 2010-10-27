@@ -1,14 +1,15 @@
-<ol class="form">
+<ol id="<%= config_list_ol_id %>" class="form">
 <% active_scaffold_config.list.columns.collect_visible.each do |c| %>
-    <li class="form-element">
-        <dl>
-            <dt>
-               <label for="update_table_from"><%= c.label%></label>
-            </dt>
-            <dd>
-               <%= check_box_tag 'config_list[]', c.name.to_s, (config_list_params.nil? ? true : config_list_params.include?(c.name)), {:id => nil}%>
-            </dd>
-        </dl>
-    </li>
+  <li class="form-element sortable">
+    <%= check_box_tag 'config_list[]', c.name.to_s, (config_list_params.nil? ? true : config_list_params.include?(c.name)), {:id => nil}%>
+    <label for="update_table_from"><%= c.label%></label>
+  </li>
 <% end %>
 </ol>
+<% if ActiveScaffold.js_framework == :prototype %>
+<%= sortable_element *config_list_sort_params %>
+<% elsif ActiveScaffold.js_framework == :jquery %>
+  <% reorder_params = {}
+     options = {:update => false} %>
+       <%= javascript_tag "ActiveScaffold.sortable('#{config_list_sort_params[0]}', #{controller_name.to_json}, #{options.to_json}, #{reorder_params.to_json});" %>
+<% end %>
