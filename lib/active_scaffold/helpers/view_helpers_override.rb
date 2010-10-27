@@ -14,12 +14,9 @@ ActiveScaffold::Helpers::ViewHelpers.module_eval do
 
       def config_list_sort_params
         options = {
-          :tag => 'li'
+          :tag => 'li',
+          :url => nil
         }
-        additional_params = [:parent_controller, :eid, :controller].reject {|param| params[param].blank?}
-        options[:with] = additional_params.inject(options[:with]) do |string, param|
-          "#{string} + '&#{param}=' + encodeURIComponent('#{escape_javascript params[param]}')"
-        end
         [config_list_ol_id, options]
       end
 end
