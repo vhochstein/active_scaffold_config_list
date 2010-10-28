@@ -10,13 +10,13 @@ module ActiveScaffold::Actions
       base.add_active_scaffold_path as_config_list_plugin_path
     end
 
-    def config_list
+    def show_config_list
       respond_to do |type|
         type.html do
-          render(:action => 'config_list_form', :layout => true)
+          render(:action => 'show_config_list_form', :layout => true)
         end
         type.js do
-          render(:partial => 'config_list_form', :layout => false)
+          render(:partial => 'show_config_list_form', :layout => false)
         end
       end
     end
