@@ -36,7 +36,7 @@ module ActiveScaffold::Actions
     end
 
     def config_list_params
-      active_scaffold_session_storage[:config_list]
+      active_scaffold_session_storage[:config_list] || active_scaffold_config.config_list.default_columns
     end
 
     def do_config_list

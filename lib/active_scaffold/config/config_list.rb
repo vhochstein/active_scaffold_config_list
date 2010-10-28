@@ -26,5 +26,9 @@ module ActiveScaffold::Config
     def label
       @label ? as_(@label) : as_('Config list %{model} columns', :model => @core.label.singularize)
     end
+
+    # if you do not want to show all columns as a default you may define same
+    # e.g. conf.config_list.default_columns = [:name, founded_on]
+    attr_accessor :default_columns
   end
 end
