@@ -5,7 +5,7 @@ module ActiveScaffold::Actions
       base.before_filter :store_config_list_params_into_session, :only => [:index]
       base.helper_method :config_list_params
 
-      as_config_list_plugin_path = File.join(Rails.root, 'vendor', 'plugins', ActiveScaffold::Config::ConfigList.plugin_directory, 'frontends', 'default' , 'views')
+      as_config_list_plugin_path = File.join(ActiveScaffold::Config::ConfigList.plugin_directory, 'frontends', 'default' , 'views')
       
       base.add_active_scaffold_path as_config_list_plugin_path
     end

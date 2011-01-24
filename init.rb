@@ -1,18 +1,9 @@
-# Make sure that ActiveScaffold has already been included
-ActiveScaffold rescue throw "should have included ActiveScaffold plug in first.  Please make sure that this overwrite plugging comes alphabetically after the ActiveScaffold plug in"
+ACTIVE_SCAFFOLD_CONFIG_LIST_PLUGIN = true
 
-# Load our overrides
-require "#{File.dirname(__FILE__)}/lib/active_scaffold_config_list/config/core.rb"
-require "#{File.dirname(__FILE__)}/lib/active_scaffold/config/config_list.rb"
-require "#{File.dirname(__FILE__)}/lib/active_scaffold/actions/config_list.rb"
-require "#{File.dirname(__FILE__)}/lib/active_scaffold/helpers/view_helpers_override.rb"
+require 'active_scaffold_config_list'
 
-##
-## Run the install script, too, just to make sure
-## But at least rescue the action in production
-##
 begin
-  require File.dirname(__FILE__) + '/install'
+  ActiveScaffoldAssets.copy_to_public(ActiveScaffoldConfigList.root)
 rescue
   raise $! unless Rails.env == 'production'
 end
