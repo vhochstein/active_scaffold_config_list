@@ -3,10 +3,6 @@ ActiveScaffold rescue throw "should have included ActiveScaffold plug in first. 
 
 # Load our overrides
 require "#{File.dirname(__FILE__)}/active_scaffold_config_list/config/core.rb"
-require "#{File.dirname(__FILE__)}/active_scaffold/config/config_list.rb"
-require "#{File.dirname(__FILE__)}/active_scaffold/actions/config_list.rb"
-require "#{File.dirname(__FILE__)}/active_scaffold/helpers/view_helpers_override.rb"
-
 
 module ActiveScaffoldConfigList
   def self.root
@@ -14,15 +10,31 @@ module ActiveScaffoldConfigList
   end
 end
 
+module ActiveScaffold
+  module Actions
+    ActiveScaffold.autoload_subdir('actions', self, File.dirname(__FILE__))
+  end
+
+  module Config
+    ActiveScaffold.autoload_subdir('config', self, File.dirname(__FILE__))
+  end
+
+  module Helpers
+    ActiveScaffold.autoload_subdir('helpers', self, File.dirname(__FILE__))
+  end
+end
+
+ActionView::Base.send(:include, ActiveScaffold::Helpers::ConfigListHelpers)
+
 
 ##
 ## Run the install assets script, too, just to make sure
 ## But at least rescue the action in production
 ##
-Rails::Application.initializer("active_scaffold_config_list.install_assets") do
+Rails::Application.initializer("active_scaffold_config_list.install_assets", :after => "active_scaffold.install_assets") do
   begin
     ActiveScaffoldAssets.copy_to_public(ActiveScaffoldConfigList.root)
   rescue
     raise $! unless Rails.env == 'production'
   end
-end unless defined?(ACTIVE_SCAFFOLD_CONFIG_LIST_PLUGIN) && ACTIVE_SCAFFOLD_CONFIG_LIST_PLUGIN == true
+end unless defined?(ACTIVE_SCAFFOLD_CONFIG_LIST_INSTALLED) && ACTIVE_SCAFFOLD_CONFIG_LIST_INSTALLED == :plugin

@@ -1,0 +1,2 @@
+ACTIVE_SCAFFOLD_CONFIG_LIST_INSTALLED = :gem
+require 'active_scaffold_config_list'
