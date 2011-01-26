@@ -1,6 +1,6 @@
 module ActiveScaffold::Config
   class ConfigList < Form
-    self.crud_type = :create
+    self.crud_type = :read
     def initialize(*args)
       super
     end
@@ -14,7 +14,7 @@ module ActiveScaffold::Config
     def self.link=(val)
       @@link = val
     end
-    @@link = ActiveScaffold::DataStructures::ActionLink.new('show_config_list', :label => :config_list, :type => :collection, :security_method => :create_authorized?)
+    @@link = ActiveScaffold::DataStructures::ActionLink.new('show_config_list', :label => :config_list, :type => :collection, :security_method => :list_authorized?)
 
     # configures where the plugin itself is located. there is no instance version of this.
     cattr_accessor :plugin_directory
