@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{active_scaffold_config_list_vho}
-  s.version = "3.0.0"
+  s.version = "3.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Volker Hochstein"]
-  s.date = %q{2011-01-26}
+  s.date = %q{2011-01-27}
   s.description = %q{User may reorder and hide/show list columns}
   s.email = %q{activescaffold@googlegroups.com}
   s.extra_rdoc_files = [
@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README",
     "Rakefile",
+    "active_scaffold_config_list_vho.gemspec",
     "frontends/default/stylesheets/cf_as-stylesheet-ie.css",
     "frontends/default/stylesheets/cf_as-stylesheet.css",
     "frontends/default/views/_show_config_list_form.html.erb",
