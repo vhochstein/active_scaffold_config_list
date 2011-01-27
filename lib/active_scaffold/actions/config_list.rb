@@ -55,5 +55,11 @@ module ActiveScaffold::Actions
         columns
       end
     end
+
+    # The default security delegates to ActiveRecordPermissions.
+    # You may override the method to customize.
+    def config_list_authorized?
+      authorized_for?(:action => :read)
+    end
   end
 end
