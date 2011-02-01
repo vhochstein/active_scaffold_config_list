@@ -2,7 +2,7 @@
 ActiveScaffold rescue throw "should have included ActiveScaffold plug in first.  Please make sure that this overwrite plugging comes alphabetically after the ActiveScaffold plug in"
 
 # Load our overrides
-require "#{File.dirname(__FILE__)}/active_scaffold_config_list/config/core.rb"
+require "active_scaffold_config_list/config/core.rb"
 
 module ActiveScaffoldConfigList
   def self.root
@@ -37,4 +37,4 @@ Rails::Application.initializer("active_scaffold_config_list.install_assets", :af
   rescue
     raise $! unless Rails.env == 'production'
   end
-end unless defined?(ACTIVE_SCAFFOLD_CONFIG_LIST_INSTALLED) && ACTIVE_SCAFFOLD_CONFIG_LIST_INSTALLED == :plugin
+end if defined?(ACTIVE_SCAFFOLD_CONFIG_LIST_GEM)

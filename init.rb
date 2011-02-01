@@ -1,5 +1,3 @@
-ACTIVE_SCAFFOLD_CONFIG_LIST_INSTALLED = :plugin
-
 require 'active_scaffold_config_list'
 
 begin
