@@ -36,6 +36,10 @@ Gem::Specification.new do |s|
     "lib/active_scaffold_config_list/engine.rb",
     "lib/active_scaffold_config_list/version.rb",
     "lib/active_scaffold_config_list_vho.rb",
+    "nbproject/private/private.properties",
+    "nbproject/private/rake-d.txt",
+    "nbproject/project.properties",
+    "nbproject/project.xml",
     "uninstall.rb"
   ]
   s.homepage = %q{http://github.com/vhochstein/active_scaffold_config_list}
