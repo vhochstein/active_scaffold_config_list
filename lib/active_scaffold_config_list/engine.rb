@@ -7,10 +7,10 @@ module ActiveScaffoldConfigList
         ActiveSupport.on_load(:action_controller) do
           require "active_scaffold_config_list/config/core.rb"
         end
-      end
 
-      ActiveSupport.on_load(:action_view) do
-        include ActiveScaffold::Helpers::ConfigListHelpers
+        ActiveSupport.on_load(:action_view) do
+          include ActiveScaffold::Helpers::ConfigListHelpers
+        end
       end
     end
   #end
