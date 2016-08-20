@@ -9,6 +9,7 @@ module ActiveScaffoldConfigList
         end
 
         ActiveSupport.on_load(:action_view) do
+          require "active_scaffold/helpers/config_list_helpers.rb"
           include ActiveScaffold::Helpers::ConfigListHelpers
         end
       end
